@@ -1,50 +1,82 @@
 document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('year').textContent = new Date().getFullYear()
 
-  // Projects for Johnson Babarinde — replace live/repo URLs with your deployments
-  const projects = [
-    {
-      id: 'p1',
-      name: 'Login UI (Auth Demo)',
-      desc: 'A clean, accessible login page demonstrating form validation, keyboard support, and progressive enhancement. Built with semantic HTML, CSS and JavaScript. Optionally connected to a mock auth service.',
-      img: 'https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?w=800&q=60&auto=format&fit=crop',
-      live: '#',
-      repo: '#',
-      tech: ['HTML', 'CSS', 'JavaScript']
-    },
-    {
-      id: 'p2',
-      name: 'Landing Page (Marketing)',
-      desc: 'A performant, responsive landing page with hero, features, pricing, and responsive imagery. Focus on typography, layout with CSS Grid/Flexbox, and optimized assets.',
-      img: 'https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?w=800&q=60&auto=format&fit=crop',
-      live: '#',
-      repo: '#',
-      tech: ['HTML', 'CSS', 'JavaScript']
-    },
-    {
-      id: 'p3',
-      name: 'E‑commerce Website (Frontend)',
-      desc: 'A complete e‑commerce frontend: product listing, product details, cart, and mock checkout flow. Emphasis on accessibility and responsive UX; implemented with vanilla JS and a React variant demonstration.',
-      img: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?w=800&q=60&auto=format&fit=crop',
-      live: '#',
-      repo: '#',
-      tech: ['HTML', 'CSS', 'JavaScript', 'React']
+  // Typewriter effect for hero subtitle
+  const typeEl = document.getElementById('typewriter')
+  if (typeEl){
+    const phrases = ['Frontend Developer', 'HTML, CSS & JavaScript Expert']
+    let pi = 0, ci = 0, deleting = false
+    function tick(){
+      const target = phrases[pi]
+      if (!deleting){
+        ci++
+        typeEl.textContent = target.slice(0, ci)
+        if (ci === target.length){ deleting = true; setTimeout(tick, 1400); return }
+      } else {
+        ci--
+        typeEl.textContent = target.slice(0, ci)
+        if (ci === 0){ deleting = false; pi = (pi + 1) % phrases.length }
+      }
+      setTimeout(tick, deleting ? 50 : 90)
     }
+    tick()
+  }
+
+  // Projects — add categories for filtering
+  const projects = [
+    { id: 'p1', name: 'Login UI (Auth Demo)', category: 'Web Apps',
+      desc: 'Accessible login page with validation and keyboard support.',
+      img: 'https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['HTML', 'CSS', 'JavaScript'] },
+    { id: 'p2', name: 'Landing Page (Marketing)', category: 'Dashboards',
+      desc: 'Responsive landing page with hero, features and optimized assets.',
+      img: 'https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['HTML', 'CSS', 'JavaScript'] },
+    { id: 'p3', name: 'E‑commerce Website (Frontend)', category: 'E-commerce',
+      desc: 'Complete e‑commerce frontend with accessible, responsive UX.',
+      img: 'https://images.unsplash.com/photo-1519337265831-281ec6cc8514?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['HTML', 'CSS', 'JavaScript', 'React'] },
+    { id: 'p4', name: 'Apple Featured Dashboard', category: 'Dashboards',
+      desc: 'Enterprise analytics dashboard with code splitting and lazy loading.',
+      img: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['React', 'TypeScript', 'Webpack'] },
+    { id: 'p5', name: 'Netflix Streaming UI', category: 'Web Apps',
+      desc: 'High-performance streaming UI with accessibility upgrades.',
+      img: 'https://images.unsplash.com/photo-1516259760930-191f58b94f86?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['React', 'Next.js', 'Cypress'] },
+    { id: 'p6', name: 'Amazon Admin Portal', category: 'Web Apps',
+      desc: 'Micro-frontend admin portal optimized for large-scale teams.',
+      img: 'https://images.unsplash.com/photo-1558478551-1a3788d8cd32?w=800&q=60&auto=format&fit=crop&fm=webp',
+      live: '#', repo: '#', tech: ['React', 'TypeScript', 'Testing Library'] },
   ]
 
   const grid = document.getElementById('projects-grid')
-  grid.innerHTML = projects.map(p => `\
-    <article class="project" data-id="${p.id}" tabindex="0" role="button" aria-label="Open details for ${p.name}">\
-      <img src="${p.img}" alt="${p.name}" />\
-      <h4>${p.name}</h4>\
-      <p>${p.desc}</p>\
-      <div class=\"tech\">${(p.tech||[]).map(t=>`<span class=\"tag\">${t}</span>`).join('')}</div>\
-      <div class=\"links\">\
-        <a href=\"${p.live}\" target=\"_blank\" rel=\"noopener noreferrer\">Live</a>\
-        <a href=\"${p.repo}\" target=\"_blank\" rel=\"noopener noreferrer\">Repo</a>\
-      </div>\
-    </article>\
-  `).join('')
+  const filterButtons = document.querySelectorAll('.filter-btn')
+  function renderProjects(filter = 'All'){
+    const list = filter === 'All' ? projects : projects.filter(p => p.category === filter)
+    grid.innerHTML = list.map((p, i) => `\
+      <article class="project reveal" data-id="${p.id}" tabindex="0" role="button" aria-label="Open details for ${p.name}" style="transition-delay:${i*60}ms">\
+        <img src="${p.img}" alt="${p.name}" loading="lazy" />\
+        <h4>${p.name}</h4>\
+        <p>${p.desc}</p>\
+        <div class=\"tech\">${(p.tech||[]).map(t=>`<span class=\"tag\">${t}</span>`).join('')}</div>\
+        <div class=\"links\">\
+          <a href=\"${p.live}\" target=\"_blank\" rel=\"noopener noreferrer\">Live Demo</a>\
+          <a href=\"${p.repo}\" target=\"_blank\" rel=\"noopener noreferrer\">View Code</a>\
+        </div>\
+      </article>`).join('')
+  }
+  renderProjects('All')
+
+  filterButtons.forEach(btn =>{
+    btn.addEventListener('click', ()=>{
+      filterButtons.forEach(b=>b.classList.remove('active'))
+      btn.classList.add('active')
+      renderProjects(btn.dataset.filter || 'All')
+      // re-observe newly rendered cards
+      observeReveals()
+    })
+  })
 
   // Smooth scrolling for nav anchors
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -58,6 +90,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
       }
     })
   })
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('mobile-menu-toggle')
+  const mobileMenu = document.getElementById('mobile-menu')
+  if (menuToggle && mobileMenu){
+    menuToggle.addEventListener('click', ()=>{
+      const open = mobileMenu.classList.toggle('open')
+      menuToggle.setAttribute('aria-expanded', String(open))
+    })
+  }
 
   // small accessibility: ensure focus outlines when keyboard used
   function handleFirstTab(e){
@@ -188,38 +230,69 @@ document.addEventListener('DOMContentLoaded', ()=>{
       console.warn('Formspree form ID not set. To enable form submissions, set the form data-formspree-id attribute or edit FORMSPREE_ID in script.js')
     }
 
-    // optional: client-side feedback
     contactForm.addEventListener('submit', (e)=>{
-      // allow normal submit if action is configured
-      if (!formId){
-        e.preventDefault()
-        alert('Contact form is not configured. Add your Formspree form id in the form data-formspree-id attribute or in script.js')
+      const status = document.querySelector('.form-status')
+      // basic client validation
+      const name = document.getElementById('name')
+      const email = document.getElementById('email')
+      const message = document.getElementById('message')
+      if (!name.value || !email.value || !message.value){
+        e.preventDefault(); status.textContent = 'Please fill out all fields.'; return
       }
+      const validEmail = /.+@.+\..+/.test(email.value)
+      if (!validEmail){ e.preventDefault(); status.textContent = 'Please enter a valid email.'; return }
+      status.textContent = 'Sending…'
+      // Allow normal submit to Formspree
+      if (!formId){ e.preventDefault(); status.textContent = 'Form not configured.' }
     })
   }
   
   // Animations: reveal elements on scroll using IntersectionObserver
-  const revealTargets = document.querySelectorAll('.reveal, .project')
-  if ('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries, obs) =>{
-      entries.forEach(entry =>{
-        if (entry.isIntersecting){
-          entry.target.classList.add('visible')
-          obs.unobserve(entry.target)
-        }
-      })
-    }, { threshold: 0.12 })
-    // add reveal class to hero text and project cards
-    document.querySelectorAll('.hero h1, .hero p, .project').forEach((el, i)=>{
-      el.classList.add('reveal')
-      // stagger projects slightly
-      if (el.classList.contains('project')) el.style.transitionDelay = (i * 80) + 'ms'
-      io.observe(el)
-    })
-  } else {
-    // fallback: make elements visible
-    document.querySelectorAll('.reveal, .project').forEach(el=>el.classList.add('visible'))
+  function observeReveals(){
+    const targets = document.querySelectorAll('.reveal, .project')
+    if ('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries, obs) =>{
+        entries.forEach(entry =>{
+          if (entry.isIntersecting){
+            entry.target.classList.add('visible')
+            obs.unobserve(entry.target)
+          }
+        })
+      }, { threshold: 0.12 })
+      targets.forEach((el)=> io.observe(el))
+    } else {
+      targets.forEach(el=>el.classList.add('visible'))
+    }
   }
+  // Initial reveal setup
+  document.querySelectorAll('.hero h1, .hero p, .skill-card, .timeline-item, .testimonial').forEach((el)=> el.classList.add('reveal'))
+  observeReveals()
+
+  // Skills bars animate on reveal
+const skillBars = document.querySelectorAll('.bar');
+if ('IntersectionObserver' in window) {
+  const barObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const level = parseInt(entry.target.getAttribute('data-level') || '0', 10);
+        const progress = entry.target.querySelector('.progress');
+        if (progress) {
+          progress.style.setProperty('--w', level + '%');
+        }
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  skillBars.forEach(bar => barObserver.observe(bar));
+} else {
+  // Fallback for browsers without IntersectionObserver
+  skillBars.forEach(bar => {
+    const level = parseInt(bar.getAttribute('data-level') || '0', 10);
+    const progress = bar.querySelector('.progress');
+    if (progress) progress.style.setProperty('--w', level + '%');
+  });
+}
 
   // Linktree: configurable link (set here or use data attribute on links)
   const LINKTREE_URL = 'https://linktr.ee/babarindejohnson1' // e.g. 'https://linktr.ee/yourusername'
@@ -256,6 +329,76 @@ document.addEventListener('DOMContentLoaded', ()=>{
         // popup blocked — navigate to mailto so native mail client opens
         window.location.href = mailtoUrl
       }
+    })
+  }
+
+  // Copy email to clipboard
+  const copyBtn = document.querySelector('.copy-email')
+  if (copyBtn){
+    copyBtn.addEventListener('click', ()=>{
+      const email = copyBtn.getAttribute('data-email') || 'babarindejohnson1@gmail.com'
+      navigator.clipboard && navigator.clipboard.writeText(email).then(()=>{
+        copyBtn.textContent = 'Copied!'
+        setTimeout(()=> copyBtn.textContent = 'Copy', 1500)
+      })
+    })
+  }
+
+  // Back to top button
+  const backToTop = document.getElementById('back-to-top')
+  if (backToTop){
+    window.addEventListener('scroll', ()=>{
+      const show = window.scrollY > 400
+      backToTop.classList.toggle('show', show)
+    })
+    backToTop.addEventListener('click', ()=> window.scrollTo({ top: 0, behavior: 'smooth' }))
+  }
+
+  // Cookie consent
+  const cookie = document.getElementById('cookie-consent')
+  if (cookie){
+    const accepted = localStorage.getItem('cookie-consent')
+    if (!accepted){ cookie.classList.add('show'); cookie.setAttribute('aria-hidden','false') }
+    cookie.querySelector('.accept')?.addEventListener('click', ()=>{ localStorage.setItem('cookie-consent','accepted'); cookie.classList.remove('show'); cookie.setAttribute('aria-hidden','true') })
+    cookie.querySelector('.decline')?.addEventListener('click', ()=>{ localStorage.setItem('cookie-consent','declined'); cookie.classList.remove('show'); cookie.setAttribute('aria-hidden','true') })
+  }
+
+  // Page load progress indicator
+  const progressBar = document.getElementById('progress-bar')
+  if (progressBar){
+    let w = 0
+    const inc = setInterval(()=>{ w += Math.random()*20; progressBar.style.width = Math.min(100,w)+'%'; if (w >= 100){ clearInterval(inc); setTimeout(()=>{ progressBar.style.opacity='0' }, 300) } }, 180)
+  }
+
+  // Testimonials carousel controls
+  const track = document.getElementById('carousel-track')
+  const prev = document.querySelector('.carousel .prev')
+  const next = document.querySelector('.carousel .next')
+  let slide = 0
+  function updateCarousel(){ track && (track.style.transform = `translateX(${-slide*33.33}%)`) }
+  prev && prev.addEventListener('click', ()=>{ slide = Math.max(0, slide - 1); updateCarousel() })
+  next && next.addEventListener('click', ()=>{ slide = Math.min(2, slide + 1); updateCarousel() })
+
+  // Parallax on hero particles
+  const particles = document.querySelector('.particles')
+  if (particles){
+    document.addEventListener('mousemove', (e)=>{
+      const x = (e.clientX / window.innerWidth - 0.5) * 10
+      const y = (e.clientY / window.innerHeight - 0.5) * 10
+      particles.style.transform = `translate(${x}px, ${y}px)`
+    })
+  }
+
+  // Resume download handler
+  const resumeBtn = document.getElementById('download-resume')
+  if (resumeBtn){
+    resumeBtn.addEventListener('click', (e)=>{
+      e.preventDefault()
+      const url = 'assets/Johnson_Babarinde_Resume.pdf'
+      fetch(url, { method: 'HEAD' }).then(res=>{
+        if (res.ok){ window.open(url, '_blank') }
+        else { alert('Resume not found. Place your PDF at assets/Johnson_Babarinde_Resume.pdf') }
+      }).catch(()=> alert('Resume not found. Place your PDF at assets/Johnson_Babarinde_Resume.pdf'))
     })
   }
 })
