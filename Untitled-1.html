@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Developer Hero Section</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 2rem;
+      background: linear-gradient(135deg, #ffffff, #e0f7fa);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #00796b; /* Accent color */
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    .hero .cta {
+      display: inline-block;
+      background-color: #00796b; /* Accent color */
+      color: #fff;
+      font-weight: 600;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .hero .cta:hover {
+      background-color: #004d40;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="main-content">
+    <section class="hero container" id="home">
+      <h1>Hi, I'm Johnson — Frontend Developer</h1>
+      <p>
+        I create responsive, interactive, and visually engaging web experiences. 
+        Skilled in HTML5, CSS3, JavaScript, React, and responsive design, I build high-performance websites 
+        that work seamlessly across all devices. I enjoy solving complex problems and crafting elegant, user-friendly solutions.
+      </p>
+      <p>
+        <a class="cta" href="#projects">Explore My Work</a>
+      </p>
+    </section>
+  </main>
+</body>
+</html>

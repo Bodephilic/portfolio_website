@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Johnson Babarinde — Frontend Developer</title>
+  <meta name="description" content="Frontend developer portfolio — HTML, CSS, JavaScript, React. Projects: Login UI, Landing Page, E-commerce." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="#">Johnson Babarinde</a>
+      <nav class="site-nav">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a id="linktree-link" href="https://linktr.ee/babarindejohnson1" data-linktree-url="https://linktr.ee/babarindejohnson1" target="_blank" rel="noopener" class="linktree-link">Linktree</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero container" id="home">
+      <h1>Hi, I'm Johnson — Frontend Developer</h1>
+      <p>I am a frontend developer passionate about creating responsive, 
+        user-friendly, and interactive web experiences. Skilled in HTML5, 
+        CSS3, JavaScript, React, and responsive design, I build high-performance 
+        websites and applications that work seamlessly across devices. 
+        I enjoy solving complex problems, optimizing interfaces, and crafting digital experiences that are both functional and visually engaging.</p>
+      <p><a class="cta" href="#projects">See my work</a></p>
+    </section>
+
+    <section class="about container" id="about">
+      <h2>About</h2>
+      <p>I am a frontend developer passionate about building responsive, user-friendly,
+         and visually engaging web experiences. Skilled in HTML5, CSS3, JavaScript, React, and 
+         responsive design, I transform ideas into interactive, high-performance websites and applications. 
+         I focus on writing clean, efficient code while ensuring seamless functionality across all devices. 
+         Constantly learning and exploring new technologies, I strive to create digital experiences that are both functional 
+         and aesthetically appealing. I enjoy solving complex problems, optimizing interfaces, and pushing the 
+         boundaries of modern web development to deliver solutions that provide real value to users and businesses.</p>
+      <ul class="skills">
+        <li>HTML &amp; accessibility</li>
+        <li>CSS (Flexbox, Grid, responsive)</li>
+        <li>JavaScript (ES6+), DOM</li>
+        <li>React basics</li>
+      </ul>
+    </section>
+
+    <section class="projects container" id="projects">
+      <h2>Projects</h2>
+      <div id="projects-grid" class="projects-grid">
+        <!-- Projects rendered by script.js -->
+      </div>
+      <p class="hint">Click any project for details.</p>
+    </section>
+
+    <section class="contact container" id="contact">
+      <h2>Contact</h2>
+      <p>If you'd like to reach out about a role or project, send a message.</p>
+      <form action="https://formspree.io/f/mwpgppjr" data-formspree-id="mwpgppjr" method="POST" class="contact-form">
+        <label for="name">Name</label>
+        <input id="name" name="name" required>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+      <p class="note">Send me email directly by clicking: <a id="email-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=babarindejohnson1@gmail.com" target="_blank" rel="noopener noreferrer">here</a></p>
+      <p class="links-card">Also: <a id="linktree-profile" href="https://linktr.ee/babarindejohnson1" data-linktree-url="https://linktr.ee/babarindejohnson1" target="_blank" rel="noopener noreferrer" class="linktree-profile">My Linktree</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; <span id="year"></span> Johnson Babarinde</small>
+    </div>
+  </footer>
+
+  <!-- Modal for project details -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div id="modal-content" class="modal-content" tabindex="-1"></div>
+  </div>
+
+
+
+  <script src="script.js">
+
+
+
+  </script>
+
+
+
+</body>
+</html>
